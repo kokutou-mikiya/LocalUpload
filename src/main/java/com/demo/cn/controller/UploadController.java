@@ -1,6 +1,9 @@
 package com.demo.cn.controller;
 
+import com.demo.cn.util.BackMessage;
+import com.demo.cn.util.CreatePath;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +20,7 @@ import java.util.UUID;
 public class UploadController {
 
     @PostMapping("upload")
-    public String fileUpload(MultipartFile file){
+    public BackMessage fileUpload(MultipartFile file){
         //获取文件名
         String fileName = file.getOriginalFilename();
         System.out.println("原始文件名："+fileName);
@@ -46,11 +49,15 @@ public class UploadController {
 
             // 上传图片到 -》 “绝对路径”
             file.transferTo(realPath);
-            return "success upload";
+            // return "success upload";
+            return  new BackMessage(200,"上传成功！！！");
+
 
         } catch (IOException e) {
             e.printStackTrace();
-            return "fail upload";
+            // return "fail upload";
+            return  new BackMessage(500,"上传失败！！！");
+
         }
     }
 }
